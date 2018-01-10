@@ -1,0 +1,39 @@
+---
+title: "Developing Data Products Week 2 Assignment"
+author: "Giovanni Madejski"
+date: "January 10, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+### Introduction
+For this project we are required to create a webpage using R markdown that features a map created with Leaflet.
+I have decided to create a map showing many of my favorite national parks here in the United States. The relevant data was acquired from https://www.latlong.net/category/national-parks-236-42.html.
+
+### Creating the Map
+
+We begin by loading the necessary library and creating some vectors with the information we which to display.
+
+```{r, echo = TRUE}
+library(leaflet)
+parkname <- c("Yellowstone", "Zion", "Yosemite", "Stanislaus", "Haleakala", "Garden of Gods", "Petrified Forest", "Chattahoochee", "Little Sandy", "Shenandoah", "Great Smoky Mountains")
+lattitude <- c(44.427895, 37.317207, 37.865101, 38.235195, 20.701283, 38.873840, 34.909988, 34.765972, 32.590797, 38.700516, 35.593670)
+longitude <- c(-110.588379, -113.022537, -119.538330, -120.066483, -156.173325, -104.886665, -109.806793, -84.143517, -95.273666, -78.292694, -83.824997)
+
+parks <- data.frame(name = parkname, lat = lattitude, lng = longitude)
+```
+ We then pass it to leaflet to generate our map.
+ 
+```{r, echo = TRUE}
+parks %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(popup = parkname)
+ 
+```
+
+We have now successfully created a leaflet map showing the locations and names of many of my favorite parks.
+
