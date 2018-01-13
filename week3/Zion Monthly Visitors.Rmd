@@ -1,0 +1,38 @@
+---
+title: "Coursera Developing Data Products Week 3"
+author: "Giovanni Madejski"
+date: "January 12, 2018"
+output: ioslides_presentation
+---
+
+````{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+For this weeks assignment we are to create a webpage using R markdown that contains a plot made with Plotly. I am planing on visiting Zion National Park sometime this year and am interested in the monthly visitor data. The data for this project was found at https://www.nps.gov/zion/learn/management/park-visitation-statistics.htm. The data came in a pdf format so we did some initial transformation and cleaning of the data before loading the data into R.
+
+## Loading and transforming data
+```{r, echo = TRUE, warning=FALSE, message=FALSE}
+library(reshape2)
+library(plotly)
+library(dplyr)
+zion <- read.csv("ZION-VISITATION-2007-2017-8.csv", row.names = 1)
+zion <- t(zion)
+zion <- melt(zion)
+colnames(zion)[] <- c("Month", "Year", "Visitors")
+zion$Year <- as.factor(zion$Year)
+```
+
+## Creating the plot
+```{r, echo= TRUE}
+plot1 <- zion %>%
+  plot_ly(x=~Month, y=~Visitors, color=~Year, type="scatter",
+          mode = "lines+markers") %>%
+  layout(title = "Monthly Visitors to Zion National Park 2007-2017")
+```
+
+## The plot
+```{r,echo=FALSE, warning=FALSE}
+plot1
+```
